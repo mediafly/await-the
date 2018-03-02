@@ -1,9 +1,9 @@
 {
   "name": "await-the",
   "version": "1.0.1",
-  "description": "Aggregation of Sindresorhus's promise in a format that is easier to read for async/await",
+  "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
   "main": "index.js",
-  "author": "Dan Greff",
+  "author": "Olono",
   "keywords": [
     "promise",
     "async",
