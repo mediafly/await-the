@@ -9,6 +9,9 @@ script:
 deploy:
 - provider: npm
   api_key: "${AUTH_TOKEN}"
-  email: dan.greff@nexd.io
+  email: it@olono.ai
   on:
     branch: master
+env:
+  global:
+    secure: hMpyKtyNOXWJmUaEWf6sc2er4zi5lbt9q5CFWgXzvoemSgjegeXcCzpcm03NTW8O824lEc6zgZldjQ3YZCm4QlrtCH4pfztPIo+VWirrK/Ok9bCosSnqkEJy0nq8cEZNMcZQ9oLObIoyUOaTigjERlRT9VB6QbhrrKuzehL9J6gIYdpdUhRU5ZSR/l8g2gG3QjEOAGdc5OoEZjXkaSqZLwa/QLjJmMwYbvsX32EXT5Gm/+cxf6TB+vh3GDVvOG+pNGmSaCY4jjK/tavzJ77lnKmKRtmglx7vKXuVUIIsQH03/nKERjSnY5UggDyx/h5dL5fpgZ3qZscCTTkFQCpKkHiLHQsa5ZHU27SDNdJBAUO20EKVFDq0am8OiTDP7cJXELKApHBLj1wN4/R8XGFZTi4P0bbkOW4jiqefX3AQddBzyNGqooSVNlmrQF+7sPi1qogFxRDjj2EcOOPk4HPhFrJyIqhzGKZd24Xe7Dg/UbU5BEo62G+QTheYYYdImdvVHNEZX5/gCSALH9BF5NctpIY9PR9p0hW7a29jRE5nsYaKhIvJc5/fTCauIyQv00f1kILO+LIGCax1bSq3BdnLY4PVPzQMcNw2sUUCtSCGdHOMs7nVYDnaZ2HMkEvxnigzTQGPgRc/34mSBQIvgzU5dsA5RGuh96yEsowFnjdbmlw=
