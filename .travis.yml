@@ -1,0 +1,14 @@
+language: node_js
+node_js: '8'
+before_install:
+- echo "//registry.npmjs.org/:_authToken=${AUTH_TOKEN}" > "${HOME}/.npmrc"
+install:
+- npm install
+script:
+- npm test
+deploy:
+- provider: npm
+  api_key: "${AUTH_TOKEN}"
+  email: dan.greff@nexd.io
+  on:
+    branch: master
