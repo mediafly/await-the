@@ -1,6 +1,3 @@
-
-
-
 const callback = require('./lib/callback');
 
 const pMapSeries = require('p-map-series');
@@ -11,8 +8,9 @@ const pEvery = require('p-every');
 const pWhilst = require('p-whilst');
 const pDoWhilst = require('p-do-whilst');
 const pSeries = require('p-series');
+const pEachSeries = require('p-each-series');
 const pTimes = require('p-times');
-const pWaterFall = require('p-waterfall');
+const pWaterfall = require('p-waterfall');
 
 exports.callback = callback;
 
@@ -36,5 +34,3 @@ exports.eachSeries = pEachSeries;
 exports.times = pTimes;
 
 exports.waterfall = pWaterfall;
-
-
