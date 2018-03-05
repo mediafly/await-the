@@ -4,6 +4,11 @@
   "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
   "main": "index.js",
   "author": "Olono",
+  "scripts": {
+    "test": "npm run lint && echo 'tests needed'",
+    "lint": "eslint .",
+    "format": "eslint . --fix"
+  },
   "keywords": [
     "promise",
     "async",
@@ -25,5 +30,12 @@
     "p-times": "^1.0.1",
     "p-waterfall": "^1.0.0",
     "p-whilst": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.11.1",
+    "prettier-eslint-cli": "^4.7.1"
   }
 }
