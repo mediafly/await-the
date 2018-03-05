@@ -52,6 +52,10 @@ Retry
 | options.maxTries | <code>Number</code> | Max number of times to retry to promise |
 | options.interval | <code>Number</code> | Time to wait in ms between promise executions |
 
+**Example**  
+```js
+await retry(myPromise, { maxTries: 10, interval: 100 });
+```
 <a name="module_wait"></a>
 
 ## wait
