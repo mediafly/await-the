@@ -54,7 +54,7 @@ Retry
 
 **Example**  
 ```js
-await retry(myPromise, { maxTries: 10, interval: 100 });
+await the.retry(myPromise, { maxTries: 10, interval: 100 });
 ```
 <a name="module_wait"></a>
 
