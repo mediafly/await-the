@@ -1,5 +1,5 @@
 {
-  "name": "await-the",
+  "name": "@olono/await-the",
   "version": "1.0.1",
   "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
   "main": "index.js",
