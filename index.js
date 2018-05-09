@@ -14,6 +14,7 @@ const eachSeries = require('p-each-series');
 const every = require('p-every');
 const map = require('p-map');
 const mapSeries = require('p-map-series');
+const mapValues = require('./lib/mapValues');
 const retry = require('./lib/retry');
 const times = require('p-times');
 const wait = require('./lib/wait');
@@ -31,6 +32,7 @@ module.exports = {
     every,
     map,
     mapSeries,
+    mapValues,
     retry,
     start: any,
     times,
