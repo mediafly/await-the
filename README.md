@@ -27,6 +27,9 @@ npm run docs
 ## Modules
 
 <dl>
+<dt><a href="#module_mapValues">mapValues</a></dt>
+<dd><p>Map Values</p>
+</dd>
 <dt><a href="#module_retry">retry</a></dt>
 <dd><p>Retry</p>
 </dd>
@@ -35,6 +38,24 @@ npm run docs
 </dd>
 </dl>
 
+<a name="module_mapValues"></a>
+
+## mapValues
+Map Values
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | key value pair to be iterated over |
+| promise | <code>Promise</code> | promise to be await for each key, called with (value, key) |
+
+**Example**  
+```js
+const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
+    return somePromise(value);
+});
+// result is now an object with {key1: <resolved promise> }
+```
 <a name="module_retry"></a>
 
 ## retry
