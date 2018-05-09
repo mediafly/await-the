@@ -44,10 +44,12 @@ npm run docs
 Map Values
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| obj | <code>Object</code> | key value pair to be iterated over |
-| promise | <code>Promise</code> | promise to be await for each key, called with (value, key) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| obj | <code>Object</code> |  | key value pair to be iterated over |
+| promise | <code>Promise</code> |  | promise to be await for each key, called with (value, key) |
+| options | <code>object</code> |  |  |
+| options.concurrency | <code>number</code> | <code>Infinity</code> | number of concurrently pending promises returned by mapper. |
 
 **Example**  
 ```js
