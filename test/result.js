@@ -17,7 +17,7 @@ describe('Result test', function() {
         assert.equal(result, VALUE * 2);
         const duration = Date.now() - curTime;
         assert(
-            duration > DELAY,
+            duration >= DELAY,
             new Error(`Task took shorter time than it should have: expected > ${DELAY}, got ${duration}`)
         );
     });
