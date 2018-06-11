@@ -33,6 +33,9 @@ npm run docs
 <dt><a href="#module_mapValues">mapValues</a></dt>
 <dd><p>Map Values</p>
 </dd>
+<dt><a href="#module_result">result</a></dt>
+<dd><p>Result</p>
+</dd>
 <dt><a href="#module_retry">retry</a></dt>
 <dd><p>Retry</p>
 </dd>
@@ -79,6 +82,23 @@ const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
     return somePromise(value);
 });
 // result is now an object with {key1: <resolved promise> }
+```
+<a name="module_result"></a>
+
+## result
+Result
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fn | <code>function</code> | The async function to promisify and call. |
+| ...args | <code>mixed</code> | Variadic arguments to send to the function, _excluding_ the callback. |
+
+**Example**  
+```js
+const asyncSum = (x, y, callback) => callback(null, x + y);
+const sum = await the.result(asyncSum, 1, 2);
+// will assign 3 to `sum`
 ```
 <a name="module_retry"></a>
 
