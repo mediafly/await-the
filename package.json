@@ -1,6 +1,6 @@
 {
   "name": "@olono/await-the",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
   "main": "index.js",
   "author": "Olono",
@@ -28,7 +28,6 @@
     "p-limit": "^1.1.0",
     "p-map": "^1.2.0",
     "p-map-series": "^1.0.0",
-    "p-series": "^1.0.0",
     "p-times": "^1.0.1",
     "p-waterfall": "^1.0.0",
     "p-whilst": "^1.0.0"
