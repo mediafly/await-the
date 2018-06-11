@@ -27,6 +27,9 @@ npm run docs
 ## Modules
 
 <dl>
+<dt><a href="#module_each">each</a></dt>
+<dd><p>Each</p>
+</dd>
 <dt><a href="#module_mapValues">mapValues</a></dt>
 <dd><p>Map Values</p>
 </dd>
@@ -38,6 +41,25 @@ npm run docs
 </dd>
 </dl>
 
+<a name="module_each"></a>
+
+## each
+Each
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| array | <code>array</code> | Array of items to run the asynchronous task with. |
+| task | <code>function</code> | The async function to be run on each value in the array |
+| options | <code>object</code> |  |
+| options.limit | <code>number</code> | Optional limit to # of tasks to run in parallel |
+
+**Example**  
+```js
+await the.each([1,2,3], someAsyncFunction, { limit: 2 });
+// will call `someAsyncFunction` on each value of the array, with at most two functions
+// running in parallel at a time.
+```
 <a name="module_mapValues"></a>
 
 ## mapValues
