@@ -40,7 +40,7 @@ describe('Result test', function() {
     });
 
     it('should fail on error being thrown in the funciton', async () => {
-        const fn = (value, cb) => {
+        const fn = (value /* cb */) => {
             if (value === 5) {
                 throw new Error('it works!');
             }
