@@ -22,6 +22,22 @@ describe('Result test', function() {
         );
     });
 
+    it('should respect binding', async () => {
+        class Foo {
+            constructor(name) {
+                this.name = name;
+            }
+            fn(cb) {
+                setTimeout(() => {
+                    return cb(null, this.name);
+                }, 100);
+            }
+        }
+        const obj = new Foo('result-test');
+        assert.equal(await the.result(obj.fn.bind(obj)), 'result-test');
+        assert.equal(await the.result(obj.fn.bind({ name: 'bar' })), 'bar');
+    });
+
     it('should fail on error being returned in callback', async () => {
         const fn = (value, cb) => {
             if (value === 5) {
