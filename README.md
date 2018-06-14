@@ -91,7 +91,7 @@ Result
 
 | Param | Type | Description |
 | --- | --- | --- |
-| fn | <code>function</code> | The async function to promisify and call. |
+| fn | <code>function</code> \| <code>array</code> | The async function to promisify and call, or an array of [class, method name]. |
 | ...args | <code>mixed</code> | Variadic arguments to send to the function, _excluding_ the callback. |
 
 **Example**  
@@ -99,15 +99,14 @@ Result
 const asyncSum = (x, y, callback) => callback(null, x + y);
 const sum = await the.result(asyncSum, 1, 2);
 // will assign 3 to `sum`
+
+await the.result([someObj, 'someFnName'], 1, 2);
+// equivalent of `await the.result(someObj.someFnName.bind(someObj), 1, 2)`
 ```
 <a name="module_retry"></a>
 
 ## retry
 Retry
-
-**Todo**
-
-- [ ] add support for functions as maxTries and interval
 
 
 | Param | Type | Description |
@@ -115,11 +114,12 @@ Retry
 | promise | <code>Promise</code> | The promise to be resolved (or rejected) on the retry cadence |
 | options | <code>Object</code> | Optional overrides for maxTries and interval |
 | options.maxTries | <code>Number</code> | Max number of times to retry to promise |
-| options.interval | <code>Number</code> | Time to wait in ms between promise executions |
+| options.interval | <code>Number</code> \| <code>function</code> | Time to wait in ms between promise executions |
 
 **Example**  
 ```js
 await the.retry(myPromise, { maxTries: 10, interval: 100 });
+await the.retry(myPromise, { maxTries: 10, interval: numTriesSoFar => (numTriesSoFar * 100) });
 ```
 <a name="module_wait"></a>
 
