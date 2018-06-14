@@ -38,6 +38,21 @@ describe('Result test', function() {
         assert.equal(await the.result(obj.fn.bind({ name: 'bar' })), 'bar');
     });
 
+    it('should work with alternate syntax', async () => {
+        class Foo {
+            constructor(name) {
+                this.name = name;
+            }
+            fn(suffix, cb) {
+                setTimeout(() => {
+                    return cb(null, `${this.name}-${suffix}`);
+                }, 100);
+            }
+        }
+        const obj = new Foo('result-test');
+        assert.equal(await the.result([obj, 'fn'], 'foo'), 'result-test-foo');
+    });
+
     it('should fail on error being returned in callback', async () => {
         const fn = (value, cb) => {
             if (value === 5) {
