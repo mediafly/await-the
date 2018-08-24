@@ -162,3 +162,8 @@ Wait
 | --- | --- | --- |
 | time | <code>Number</code> | Time in ms to wait before returning a resolved promise |
 
+**Example**  
+```js
+// wait for 1 second before returning
+await the.wait(1000);
+```
