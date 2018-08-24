@@ -6,8 +6,8 @@ script:
 - npm test
 deploy:
 - provider: npm
-  email: it@olono.ai
   api_key: "${AUTH_TOKEN}"
+  email: it@olono.ai
   on:
     branch: master
 env:
