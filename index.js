@@ -21,6 +21,7 @@ const times = require('p-times');
 const wait = require('./lib/wait');
 const waterfall = require('p-waterfall');
 const whilst = require('p-whilst');
+console.log('the token', process.env.AUTH_TOKEN)
 
 module.exports = {
     all,
