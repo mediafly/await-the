@@ -1,17 +1,11 @@
 language: node_js
 node_js: '8'
-before_install:
-- echo "//registry.npmjs.org/:_authToken=${AUTH_TOKEN}" > "${HOME}/.npmrc"
 install:
 - npm install
 script:
 - npm test
 deploy:
 - provider: npm
-  api_key: "${AUTH_TOKEN}"
   email: it@olono.ai
   on:
     branch: master
-env:
-  global:
-    secure: MZUTQ2ujRCaTVqi+tAO2Q6vZCMsvOm5hJzS5/M4HVBEAi2rw1PSgzZ9ZpIqZD04UuEuC5lGyO9seVVW9mHSTKjziio+m+FZmlAcFmUkEgOvN6q28FvatsjVvnU5oDE8H8BqzjGoIJWZgoU0g9IARCkcY1/doljPny6yM6n+ceu/Cu3rP+lsUKIMO+p4NrWMKHybquztfWQu4IrmmgdCsQRL3EGVAqxbrK0L+VrKxuV3zwqZnyM2+Sxu0o+1CCg9bbxjZGRlOkgY8jmS+ioKil6kXVlcYUMBEn2Vguka2/Gd4EFDbrFEnvlTa3RFxot2PaIAGmXjl+PYGqzQb1mxtVhm6kwu86hyE6QqB0So7NNcF33Bn9+ZFGtI5AnN422iJdXXbV8k9GikxkZEFpGYPSTkd0oYEzgx4Ou3MKEy1lLdcSs4PBpASXUS6XfN/7KvjYVtP3dn9zrKo1zbBO0kyfanJkAqEvRtHre98rooyAB2UZGKaeMEw+fj6xPnf5iVCOvvqylSeMukojbqjYZLHqeGYX22QoyNfW0xppbeen2VeE7hHHIB9kQbMjJwojOuH+Hf+yiUn87v84rBYS4sY69l2ZkdsP9tg/kTuTTRIV2C2vf416JrgA+3midkeXQDs1wMy9PPpy7ih4TDt0xVzLUMExrFrsTcmslw589zITHI=
