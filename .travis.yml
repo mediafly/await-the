@@ -7,7 +7,7 @@ script:
 deploy:
 - provider: npm
   api_key: "${AUTH_TOKEN}"
-  email: it@olono.ai
+  email: support@olono.ai
   on:
     branch: master
 env:
