@@ -27,6 +27,9 @@ npm run docs
 ## Modules
 
 <dl>
+<dt><a href="#module_callback">callback</a></dt>
+<dd><p>Callback</p>
+</dd>
 <dt><a href="#module_each">each</a></dt>
 <dd><p>Each</p>
 </dd>
@@ -44,6 +47,34 @@ npm run docs
 </dd>
 </dl>
 
+<a name="module_callback"></a>
+
+## callback
+Callback
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [callback] | <code>function</code> | if present will invoke the callback with the err and result otherwise return or throw |
+| [err] | <code>Object</code> \| <code>String</code> \| <code>Number</code> \| <code>Boolean</code> | error to throw or return to the caller |
+| [result] | <code>any</code> | result to return to the calling function |
+
+**Example**  
+```js
+const myFunc = async (args, callback) => {
+    try {
+        const result = await somePromise();
+        return the.callback(callback, null, result);
+    } catch (e) {
+        return the.callback(callback, e.message);
+    }
+};
+
+// call as a promise
+await myFunc(args);
+// or as a callback
+myFunc(args, (err, result) => {});
+```
 <a name="module_each"></a>
 
 ## each
