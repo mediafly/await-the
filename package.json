@@ -1,6 +1,6 @@
 {
   "name": "await-the",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
   "main": "index.js",
   "author": "Olono",
@@ -17,6 +17,10 @@
     "the",
     "es6"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olono/await-the.git"
+  },
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.10",

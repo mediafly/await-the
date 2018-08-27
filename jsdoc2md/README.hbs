@@ -1,5 +1,10 @@
 # Await The Promise
 
+## Install
+```bash
+npm install await-the
+```
+
 ## NPM Options
 
 ### Testing
