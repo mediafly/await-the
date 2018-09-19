@@ -12,10 +12,12 @@
     },
     "keywords": [
         "promise",
+        "promises",
+        "promisify",
         "async",
         "await",
-        "ECMAScript 2015",
-        "ES6"
+        "the",
+        "es6"
     ],
     "repository": {
         "type": "git",
