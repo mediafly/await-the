@@ -15,7 +15,7 @@ A utility which provides straight-forward, powerful functions for working with a
 Install for use with Node.js.
 
 ```bash
-npm install --save await-the
+npm install await-the
 ```
 
 ## NPM Options
