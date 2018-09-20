@@ -1,48 +1,53 @@
 {
-  "name": "await-the",
-  "version": "1.5.3",
-  "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
-  "main": "index.js",
-  "author": "Olono",
-  "scripts": {
-    "test": "npm run lint && mocha --bail --exit test",
-    "lint": "eslint .",
-    "format": "eslint . --fix",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs --files **/*.js > README.md"
-  },
-  "keywords": [
-    "promise",
-    "async",
-    "await",
-    "the",
-    "es6"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/olono/await-the.git"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.10",
-    "p-all": "^1.0.0",
-    "p-any": "^1.1.0",
-    "p-do-whilst": "^0.1.0",
-    "p-each-series": "^1.0.0",
-    "p-every": "^1.0.2",
-    "p-limit": "^1.1.0",
-    "p-map": "^1.2.0",
-    "p-map-series": "^1.0.0",
-    "p-times": "^1.0.1",
-    "p-waterfall": "^1.0.0",
-    "p-whilst": "^1.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^4.18.2",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "jsdoc-to-markdown": "^4.0.1",
-    "mocha": "^5.0.1",
-    "prettier": "^1.11.1",
-    "prettier-eslint-cli": "^4.7.1"
-  }
+    "name": "await-the",
+    "version": "1.5.4",
+    "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
+    "main": "index.js",
+    "author": "Olono, Inc.",
+    "scripts": {
+        "test": "npm run lint && mocha --bail --exit test",
+        "lint": "eslint .",
+        "format": "eslint . --fix",
+        "docs": "jsdoc2md -t jsdoc2md/README.hbs --files **/*.js > README.md"
+    },
+    "keywords": [
+        "promise",
+        "promises",
+        "promisify",
+        "async",
+        "await",
+        "the",
+        "es6"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/olono/await-the.git"
+    },
+    "bugs": {
+        "url": "https://github.com/olono/await-the/issues"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "lodash": "^4.17.10",
+        "p-all": "^1.0.0",
+        "p-any": "^1.1.0",
+        "p-do-whilst": "^0.1.0",
+        "p-each-series": "^1.0.0",
+        "p-every": "^1.0.2",
+        "p-limit": "^1.1.0",
+        "p-map": "^1.2.0",
+        "p-map-series": "^1.0.0",
+        "p-times": "^1.0.1",
+        "p-waterfall": "^1.0.0",
+        "p-whilst": "^1.0.0"
+    },
+    "devDependencies": {
+        "eslint": "^4.18.2",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-prettier": "^2.6.0",
+        "jsdoc-to-markdown": "^4.0.1",
+        "mocha": "^5.0.1",
+        "prettier": "^1.11.1",
+        "prettier-eslint-cli": "^4.7.1"
+    }
 }

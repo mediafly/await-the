@@ -10,7 +10,27 @@ module.exports = {
                 printWidth: 110
             }
         ],
-        'no-console': 0
+        'valid-jsdoc': [
+            'error',
+            {
+                prefer: {
+                    arg: 'param',
+                    argument: 'param',
+                    return: 'returns'
+                },
+                preferType: {
+                    boolean: 'Boolean',
+                    number: 'Number',
+                    object: 'Object',
+                    string: 'String',
+                    array: 'Array',
+                    function: 'Function'
+                },
+                requireReturn: false,
+                matchDescription: '.+',
+                requireReturnDescription: false
+            }
+        ]
     },
     env: {
         node: true,
