@@ -5,10 +5,6 @@
 <!--- Describe your changes in detail -->
 <!--- Why is this change required? What problem does it solve? -->
 
-## JIRA ticket
-
-[ISSUE-XXXX](https://nexdio.atlassian.net/browse/ISSUE-XXXX)
-
 ## How Has This Been Tested
 
 <!--- THIS IS REQUIRED! -->
