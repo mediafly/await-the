@@ -12,7 +12,7 @@ A utility which provides straight-forward, powerful functions for working with a
 
 ## Installation
 
-Install for use with Node.js.
+You can install into your Node.js project as a dependency with:
 
 ```bash
 npm install await-the
@@ -24,7 +24,7 @@ The different package NPM options.
 
 ### Test
 
-Runs all mocha tests in the `test` directory.
+Runs the linter and all Mocha tests in the `test` directory.
 
 ```bash
 npm test
@@ -92,7 +92,7 @@ or return the error to a callback.
 | --- | --- | --- |
 | callback | <code>function</code> | If present will invoke the callback with the err and result; otherwise, return or throw. |
 | err | <code>Object</code> \| <code>String</code> \| <code>Number</code> \| <code>Boolean</code> | Error to throw or return to the caller. |
-| result | <code>\*</code> | Result to return to the calling function. |
+| result | <code>\*</code> | The thrown error or the result to return to the calling function. |
 
 **Example**  
 ```js
@@ -115,6 +115,7 @@ myFunc(args, (err, result) => {});
 ## each ⇒ <code>\*</code>
 Given an array, run the given asynchronous task in parallel for each value of the array.
 
+**Returns**: <code>\*</code> - The last thrown error or the result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -134,6 +135,7 @@ await the.each([1,2,3], someAsyncFunction, { limit: 2 });
 ## mapValues ⇒ <code>Object</code>
 Given an object of key-value pairs, run the given asynchronous task in parallel for each pair.
 
+**Returns**: <code>Object</code> - An object containing the results for each key.  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -155,6 +157,7 @@ const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
 Given a function that expects a callback as its last argument, await a promisified version of that function
 and return the result.
 
+**Returns**: <code>\*</code> - The thrown error or the result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -175,6 +178,7 @@ await the.result([someObj, 'someFnName'], 1, 2);
 ## retry ⇒ <code>\*</code>
 Retry promise a given number of times at an interval.
 
+**Returns**: <code>\*</code> - The last thrown error or the result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
