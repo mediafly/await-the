@@ -8,4 +8,4 @@ include:
   - README.md
   - LICENSE.md
 
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
