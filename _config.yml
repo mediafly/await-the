@@ -1,0 +1,11 @@
+# GitHub Pages config
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - LICENSE.md
+
+theme: jekyll-theme-minimal
