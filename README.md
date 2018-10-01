@@ -18,42 +18,6 @@ You can install into your Node.js project as a dependency with:
 npm install await-the
 ```
 
-## NPM Options
-
-The different package NPM options.
-
-### Test
-
-Runs the linter and all Mocha tests in the `test` directory.
-
-```bash
-npm test
-```
-
-### Lint
-
-Analyse code for potential errors and styling issues.
-
-```bash
-npm run lint
-```
-
-### Format
-
-Fix issues found during linting.
-
-```bash
-npm run format
-```
-
-### Build documentation
-
-Updates this README with the [API Reference](#api-reference).
-
-```bash
-npm run docs
-```
-
 ## API Reference
 
 ## Modules
@@ -217,3 +181,40 @@ const the = require('await-the');
 // wait for 1 second before returning
 await the.wait(1000);
 ```
+
+## NPM Options
+
+The different package NPM options.
+
+### Test
+
+Runs the linter and all Mocha tests in the `test` directory.
+
+```bash
+npm test
+```
+
+### Lint
+
+Analyse code for potential errors and styling issues.
+
+```bash
+npm run lint
+```
+
+### Format
+
+Fix issues found during linting.
+
+```bash
+npm run format
+```
+
+### Build documentation
+
+Updates this README with the [API Reference](#api-reference).
+
+```bash
+npm run docs
+```
+
