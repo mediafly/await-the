@@ -5,10 +5,10 @@
 
 A utility which provides straight-forward, powerful functions for working with async/await in JavaScript.
 
-+ [Install](#install)
-+ [Testing](#testing)
-+ [NPM Options](#npm-options)
++ [Installation](#installation)
 + [API Reference](#api-reference)
++ [Testing](#test)
++ [NPM Options](#npm-options)
 
 ## Installation
 
@@ -16,42 +16,6 @@ You can install into your Node.js project as a dependency with:
 
 ```bash
 npm install await-the
-```
-
-## NPM Options
-
-The different package NPM options.
-
-### Test
-
-Runs the linter and all Mocha tests in the `test` directory.
-
-```bash
-npm test
-```
-
-### Lint
-
-Analyse code for potential errors and styling issues.
-
-```bash
-npm run lint
-```
-
-### Format
-
-Fix issues found during linting.
-
-```bash
-npm run format
-```
-
-### Build documentation
-
-Updates this README with the [API Reference](#api-reference).
-
-```bash
-npm run docs
 ```
 
 ## API Reference
@@ -96,6 +60,7 @@ or return the error to a callback.
 
 **Example**  
 ```js
+const the = require('await-the');
 const myFunc = async (args, callback) => {
     try {
         const result = await somePromise();
@@ -126,6 +91,7 @@ Given an array, run the given asynchronous task in parallel for each value of th
 
 **Example**  
 ```js
+const the = require('await-the');
 await the.each([1,2,3], someAsyncFunction, { limit: 2 });
 // will call `someAsyncFunction` on each value of the array, with at most two functions
 // running in parallel at a time.
@@ -146,6 +112,7 @@ Given an object of key-value pairs, run the given asynchronous task in parallel 
 
 **Example**  
 ```js
+const the = require('await-the');
 const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
     return somePromise(value);
 });
@@ -162,16 +129,21 @@ and return the result.
 | Param | Type | Description |
 | --- | --- | --- |
 | fn | <code>function</code> \| <code>Array</code> | The async function to promisify and call, or an array of [class, method name]. |
-| ...args | <code>\*</code> | Variadic arguments to send to the function, _excluding_ the callback. |
+| ...args | <code>\*</code> | Variadic arguments to send to the function, _excluding_ the callback.  Note that _all_ parameters of the function besides the callback must have values supplied, even if they're optional. |
 
 **Example**  
 ```js
+const the = require('await-the');
 const asyncSum = (x, y, callback) => callback(null, x + y);
 const sum = await the.result(asyncSum, 1, 2);
 // will assign 3 to `sum`
 
 await the.result([someObj, 'someFnName'], 1, 2);
 // equivalent of `await the.result(someObj.someFnName.bind(someObj), 1, 2)`
+
+const someFnWithOptionalArgs = (x, y = 1, opts = {}, callback) => callback(null, x + y);
+await the.result(someFnWithOptionalArgs, 2, 1, {});
+// if the function has optional params before the callback, values must be supplied for all
 ```
 <a name="module_retry"></a>
 
@@ -189,6 +161,7 @@ Retry promise a given number of times at an interval.
 
 **Example**  
 ```js
+const the = require('await-the');
 await the.retry(myPromise, { maxTries: 10, interval: 100 });
 await the.retry(myPromise, { maxTries: 10, interval: numTriesSoFar => (numTriesSoFar * 100) });
 ```
@@ -204,6 +177,44 @@ Promise based wait utility.
 
 **Example**  
 ```js
+const the = require('await-the');
 // wait for 1 second before returning
 await the.wait(1000);
 ```
+
+## NPM Options
+
+The different package NPM options.
+
+### Test
+
+Runs the linter and all Mocha tests in the `test` directory.
+
+```bash
+npm test
+```
+
+### Lint
+
+Analyse code for potential errors and styling issues.
+
+```bash
+npm run lint
+```
+
+### Format
+
+Fix issues found during linting.
+
+```bash
+npm run format
+```
+
+### Build documentation
+
+Updates this README with the [API Reference](#api-reference).
+
+```bash
+npm run docs
+```
+
