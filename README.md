@@ -23,12 +23,18 @@ npm install await-the
 ## Modules
 
 <dl>
+<dt><a href="#module_Limiter">Limiter</a></dt>
+<dd><p>Given a collection of curried functions or values return the resolved values via the emitters</p>
+</dd>
 <dt><a href="#module_callback">callback</a></dt>
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
 or return the error to a callback.</p>
 </dd>
-<dt><a href="#module_each">each</a> ⇒ <code>*</code></dt>
+<dt><a href="#module_each">each</a></dt>
 <dd><p>Given an array, run the given asynchronous task in parallel for each value of the array.</p>
+</dd>
+<dt><a href="#module_map">map</a> ⇒ <code>Array</code></dt>
+<dd><p>Given a collection run a map over it</p>
 </dd>
 <dt><a href="#module_mapValues">mapValues</a> ⇒ <code>Object</code></dt>
 <dd><p>Given an object of key-value pairs, run the given asynchronous task in parallel for each pair.</p>
@@ -45,6 +51,49 @@ and return the result.</p>
 </dd>
 </dl>
 
+<a name="module_Limiter"></a>
+
+## Limiter
+Given a collection of curried functions or values return the resolved values via the emitters
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| curriedFunctions | <code>Array</code> | array of functions to run (could be array of values) |
+| task | <code>function</code> | The async function to be run on each value in the array. |
+| options | <code>Object</code> | Optional overrides. |
+| options.limit | <code>Number</code> | Optional limit to # of tasks to run in parallel. |
+
+**Example**  
+```js
+const the = require('await-the');
+const functions = [
+    async () => {
+        await the.wait(1000);
+        return 'waiter';
+    },
+    () => {
+        return 'check please';
+    }
+];
+const limiter = new the.Limiter(functions, { limit: 1 });
+
+limiter.on('iteration', ({ key, resultValue }) => {
+    // resultValue - value of function ran
+    // key - key of collection the function was run for
+});
+
+limiter.on('done', () => {
+    return done();
+});
+
+limiter.on('error', e => {
+    // e - error when running functions
+});
+
+// begin iteration
+limiter.start();
+```
 <a name="module_callback"></a>
 
 ## callback
@@ -77,14 +126,13 @@ myFunc(args, (err, result) => {});
 ```
 <a name="module_each"></a>
 
-## each ⇒ <code>\*</code>
+## each
 Given an array, run the given asynchronous task in parallel for each value of the array.
 
-**Returns**: <code>\*</code> - The last thrown error or the result.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| array | <code>Array</code> | Array of items to run the asynchronous task with. |
+| collection | <code>Array</code> \| <code>Object</code> | Array or object of items to run the asynchronous task with. |
 | task | <code>function</code> | The async function to be run on each value in the array. |
 | options | <code>Object</code> | Optional overrides. |
 | options.limit | <code>Number</code> | Optional limit to # of tasks to run in parallel. |
@@ -96,6 +144,28 @@ await the.each([1,2,3], someAsyncFunction, { limit: 2 });
 // will call `someAsyncFunction` on each value of the array, with at most two functions
 // running in parallel at a time.
 ```
+<a name="module_map"></a>
+
+## map ⇒ <code>Array</code>
+Given a collection run a map over it
+
+**Returns**: <code>Array</code> - An array containing the results for each index  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| collection | <code>Array</code> |  | to iterate over |
+| task | <code>Promise</code> |  | Promise to be await for each key, called with (value, key). |
+| options | <code>Object</code> |  | Optional overrides. |
+| options.limit | <code>Number</code> | <code>Infinity</code> | Number of concurrently pending promises returned by mapper. |
+
+**Example**  
+```js
+const the = require('await-the');
+const result = await the.map(['item1'], async (value, key) => {
+    return somePromise(value);
+});
+// result is now an object with [<resolved promise>]
+```
 <a name="module_mapValues"></a>
 
 ## mapValues ⇒ <code>Object</code>
@@ -105,10 +175,10 @@ Given an object of key-value pairs, run the given asynchronous task in parallel 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| obj | <code>Object</code> |  | Key-value pair to be iterated over. |
-| promise | <code>Promise</code> |  | Promise to be await for each key, called with (value, key). |
+| collection | <code>Object</code> |  | Key-value pair to be iterated over. |
+| task | <code>Promise</code> |  | Promise to be await for each key, called with (value, key). |
 | options | <code>Object</code> |  | Optional overrides. |
-| options.concurrency | <code>Number</code> | <code>Infinity</code> | Number of concurrently pending promises returned by mapper. |
+| options.limit | <code>Number</code> | <code>Infinity</code> | Number of concurrently pending promises returned by mapper. |
 
 **Example**  
 ```js
