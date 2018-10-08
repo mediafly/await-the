@@ -12,7 +12,7 @@ const doWhilst = require('p-do-whilst');
 const each = require('./lib/each');
 const eachSeries = require('p-each-series');
 const every = require('p-every');
-const map = require('p-map');
+const Limiter = require('./lib/Limiter');
 const mapSeries = require('p-map-series');
 const mapValues = require('./lib/mapValues');
 const result = require('./lib/result');
@@ -31,6 +31,7 @@ module.exports = {
     eachSeries,
     end: all,
     every,
+    Limiter,
     map,
     mapSeries,
     mapValues,
