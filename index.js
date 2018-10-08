@@ -13,6 +13,7 @@ const each = require('./lib/each');
 const eachSeries = require('p-each-series');
 const every = require('p-every');
 const Limiter = require('./lib/Limiter');
+const map = require('./lib/map');
 const mapSeries = require('p-map-series');
 const mapValues = require('./lib/mapValues');
 const result = require('./lib/result');
