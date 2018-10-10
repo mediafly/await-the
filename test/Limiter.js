@@ -7,9 +7,8 @@ const assert = require('assert');
 describe('Limiter test', function() {
     this.timeout(30000);
 
-    it('should return if no functions are supplied', done => {
-        const curriedFunctions = [];
-        const limiter = new the.Limiter(curriedFunctions);
+    it('should return if no collection is supplied', done => {
+        const limiter = new the.Limiter();
 
         let iterations = 0;
         limiter.on('iteration', () => {
@@ -21,8 +20,8 @@ describe('Limiter test', function() {
             return done();
         });
 
-        limiter.on('error', e => {
-            assert(!e);
+        limiter.on('error', ({ error }) => {
+            assert(!error, `Got error ${error.message}`);
             return done();
         });
 
@@ -30,8 +29,8 @@ describe('Limiter test', function() {
     });
 
     it('should do iterate 2 times and call done', done => {
-        const curriedFunctions = [() => {}, () => {}];
-        const limiter = new the.Limiter(curriedFunctions);
+        const collection = ['item1', 'item2'];
+        const limiter = new the.Limiter(collection);
 
         let iterations = 0;
         limiter.on('iteration', () => {
@@ -43,8 +42,8 @@ describe('Limiter test', function() {
             return done();
         });
 
-        limiter.on('error', e => {
-            assert(!e);
+        limiter.on('error', ({ error }) => {
+            assert(!error, `Got error ${error.message}`);
             return done();
         });
 
@@ -52,16 +51,18 @@ describe('Limiter test', function() {
     });
 
     it('should be able to run serially with a limit of 1', done => {
-        const curriedFunctions = [
-            async () => {
-                await the.wait(1000);
-                return 'waiter';
+        const collection = ['waiter', 'check please'];
+        const limiter = new the.Limiter(
+            collection,
+            async (value, key) => {
+                if (key === 0) {
+                    await the.wait(1000);
+                }
+
+                return value;
             },
-            () => {
-                return 'check please';
-            }
-        ];
-        const limiter = new the.Limiter(curriedFunctions, { limit: 1 });
+            { limit: 1 }
+        );
 
         let results = [];
         limiter.on('iteration', ({ resultValue }) => {
@@ -75,8 +76,8 @@ describe('Limiter test', function() {
             return done();
         });
 
-        limiter.on('error', e => {
-            assert(!e);
+        limiter.on('error', ({ error }) => {
+            assert(!error, `Got error ${error.message}`);
             return done();
         });
 
@@ -84,20 +85,21 @@ describe('Limiter test', function() {
     });
 
     it('should be able to run in parallel with a limit of 3', done => {
-        const curriedFunctions = [
-            async () => {
-                await the.wait(1000);
-                return 'waiter1';
+        const collection = ['waiter1', 'waiter2', 'check please'];
+
+        const limiter = new the.Limiter(
+            collection,
+            async (value, key) => {
+                if (key === 0) {
+                    await the.wait(1000);
+                } else if (key === 1) {
+                    await the.wait(1000);
+                }
+
+                return value;
             },
-            async () => {
-                await the.wait(1000);
-                return 'waiter2';
-            },
-            () => {
-                return 'check please';
-            }
-        ];
-        const limiter = new the.Limiter(curriedFunctions, { limit: 3 });
+            { limit: 3 }
+        );
 
         let results = [];
         limiter.on('iteration', ({ resultValue }) => {
@@ -108,13 +110,16 @@ describe('Limiter test', function() {
         limiter.on('done', () => {
             const totalTime = Date.now() - timer;
             assert.strictEqual(_.size(results), 3);
-            assert(totalTime < 2000, 'Expected execution to take less than 2 seconds to prove parallelism');
+            assert(
+                totalTime < 2000,
+                `Expected execution to take less than 2 seconds to prove parallelism got ${totalTime}`
+            );
             assert.strictEqual(_.first(results), 'check please');
             return done();
         });
 
-        limiter.on('error', e => {
-            assert(!e);
+        limiter.on('error', ({ error }) => {
+            assert(!error, `Got error ${error.message}`);
             return done();
         });
 
@@ -123,18 +128,21 @@ describe('Limiter test', function() {
     });
 
     it('should be able to run in parallel with a limit of 2', done => {
-        const curriedFunctions = [
-            async () => {
-                await the.wait(2000);
-                return 'waiter1';
+        const collection = ['waiter1', 'waiter2', 'check please'];
+
+        const limiter = new the.Limiter(
+            collection,
+            async (value, key) => {
+                if (key === 0) {
+                    await the.wait(2000);
+                } else if (key === 1) {
+                    await the.wait(1000);
+                }
+
+                return value;
             },
-            async () => {
-                await the.wait(1000);
-                return 'waiter2';
-            },
-            'check please'
-        ];
-        const limiter = new the.Limiter(curriedFunctions, { limit: 2 });
+            { limit: 2 }
+        );
 
         let results = [];
         limiter.on('iteration', ({ resultValue }) => {
@@ -152,8 +160,8 @@ describe('Limiter test', function() {
             return done();
         });
 
-        limiter.on('error', e => {
-            assert(!e);
+        limiter.on('error', ({ error }) => {
+            assert(!error, `Got error ${error.message}`);
             return done();
         });
 
@@ -162,8 +170,8 @@ describe('Limiter test', function() {
     });
 
     it('should throw for invalid channel', () => {
-        const curriedFunctions = [];
-        const limiter = new the.Limiter(curriedFunctions);
+        const collection = [];
+        const limiter = new the.Limiter(collection);
 
         let error;
         try {
