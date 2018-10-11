@@ -24,7 +24,7 @@ npm install await-the
 
 <dl>
 <dt><a href="#module_Limiter">Limiter</a></dt>
-<dd><p>Given a collection of curried functions or values return the resolved values via the emitters</p>
+<dd><p>Given a collection and a task return resolved values of the task being ran per value via the emitters</p>
 </dd>
 <dt><a href="#module_callback">callback</a></dt>
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
@@ -54,13 +54,13 @@ and return the result.</p>
 <a name="module_Limiter"></a>
 
 ## Limiter
-Given a collection of curried functions or values return the resolved values via the emitters
+Given a collection and a task return resolved values of the task being ran per value via the emitters
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| curriedFunctions | <code>Array</code> | array of functions to run (could be array of values) |
-| task | <code>function</code> | The async function to be run on each value in the array. |
+| collection | <code>Array</code> \| <code>Object</code> | collection of data to be iterated over |
+| task | <code>function</code> | The async function to be run on each value in the collection. |
 | options | <code>Object</code> | Optional overrides. |
 | options.limit | <code>Number</code> | Optional limit to # of tasks to run in parallel. |
 
@@ -87,8 +87,8 @@ limiter.on('done', () => {
     return done();
 });
 
-limiter.on('error', e => {
-    // e - error when running functions
+limiter.on('error', ({error}) => {
+    // error - error when running functions
 });
 
 // begin iteration
