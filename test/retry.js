@@ -104,6 +104,26 @@ describe('Retry test', function() {
         assert(duration > 2000 && duration < 2100, `Expected duration to be ~2000, instead saw ${duration}`);
     });
 
+    it('should default to a 2 second interval for non-number or function type', async () => {
+        const start = Date.now();
+        let error;
+        try {
+            await the.retry(
+                async () => {
+                    await the.wait(1);
+                    throw new Error('always fail');
+                },
+                { maxTries: 2, interval: 'forever!' }
+            );
+        } catch (e) {
+            error = e;
+        }
+
+        assert(error);
+        const duration = Date.now() - start;
+        assert(duration > 2000 && duration < 2100, `Expected duration to be ~2000, instead saw ${duration}`);
+    });
+
     it('should gracefully handle bogus output from an interval function', async () => {
         const start = Date.now();
         let error;

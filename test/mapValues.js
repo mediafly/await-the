@@ -35,4 +35,48 @@ describe('Map Values test', function() {
 
         assert(!!err);
     });
+
+    it('should run in parallel if the limit greater than 1', async () => {
+        const collection = {
+            item1: 'item-1',
+            item2: 'item-2',
+            item3: 'item-3'
+        };
+        const task = async (value, key) => {
+            await the.wait(500);
+            return `${value}${key}`;
+        };
+
+        const start = Date.now();
+        const output = await the.mapValues(collection, task, { limit: 2 });
+        const duration = Date.now() - start;
+        assert(duration < 1500, 'Expected promises to run in parallel');
+        assert.deepStrictEqual(output, {
+            item1: 'item-1item1',
+            item2: 'item-2item2',
+            item3: 'item-3item3'
+        });
+    });
+
+    it('should run in parallel if the concurrency greater than 1', async () => {
+        const collection = {
+            item1: 'item-1',
+            item2: 'item-2',
+            item3: 'item-3'
+        };
+        const task = async (value, key) => {
+            await the.wait(500);
+            return `${value}${key}`;
+        };
+
+        const start = Date.now();
+        const output = await the.mapValues(collection, task, { concurrency: 2 });
+        const duration = Date.now() - start;
+        assert(duration < 1500, 'Expected promises to run in parallel');
+        assert.deepStrictEqual(output, {
+            item1: 'item-1item1',
+            item2: 'item-2item2',
+            item3: 'item-3item3'
+        });
+    });
 });

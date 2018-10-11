@@ -10,10 +10,9 @@ const any = require('p-any');
 const callback = require('./lib/callback');
 const doWhilst = require('p-do-whilst');
 const each = require('./lib/each');
-const eachSeries = require('p-each-series');
 const every = require('p-every');
-const map = require('p-map');
-const mapSeries = require('p-map-series');
+const Limiter = require('./lib/Limiter');
+const map = require('./lib/map');
 const mapValues = require('./lib/mapValues');
 const result = require('./lib/result');
 const retry = require('./lib/retry');
@@ -28,11 +27,10 @@ module.exports = {
     callback,
     doWhilst,
     each,
-    eachSeries,
     end: all,
     every,
+    Limiter,
     map,
-    mapSeries,
     mapValues,
     result,
     retry,
