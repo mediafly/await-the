@@ -38,7 +38,7 @@ describe('Map Values test', function() {
 
     it('should run in parallel if the limit greater than 1', async () => {
         const collection = {
-            item1: 'item-1',
+            'item1.dummy': 'item-1',
             item2: 'item-2',
             item3: 'item-3'
         };
@@ -52,7 +52,7 @@ describe('Map Values test', function() {
         const duration = Date.now() - start;
         assert(duration < 1500, 'Expected promises to run in parallel');
         assert.deepStrictEqual(output, {
-            item1: 'item-1item1',
+            'item1.dummy': 'item-1item1.dummy',
             item2: 'item-2item2',
             item3: 'item-3item3'
         });
