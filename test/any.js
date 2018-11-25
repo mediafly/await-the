@@ -20,7 +20,7 @@ describe('all test', function() {
 
     it('should throw an error if no promises resolve', async () => {
         const collection = ['item1', 'item2', 'item3'];
-        const task = async (value, index) => {
+        const task = async () => {
             throw new Error('test error');
         };
         let err;
@@ -31,5 +31,18 @@ describe('all test', function() {
         }
         assert(err);
         assert(err instanceof Error);
+    });
+
+    it('should not error if last item resolves (edge case)', async () => {
+        const collection = ['item1', 'item2', 'item3', 'item4'];
+        const task = async (value, index) => {
+            if (index === 3) {
+                return 'hi';
+            }
+            throw new Error('test error');
+        };
+
+        const result = await the.any(collection, task);
+        assert.strictEqual(result, true);
     });
 });
