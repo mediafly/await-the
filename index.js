@@ -6,7 +6,7 @@
 'use strict';
 
 const all = require('./lib/all');
-const any = require('p-any');
+const any = require('./lib/any');
 const callback = require('./lib/callback');
 const doWhilst = require('p-do-whilst');
 const each = require('./lib/each');
@@ -34,7 +34,7 @@ module.exports = {
     mapValues,
     result,
     retry,
-    start: any,
+    some: any,
     times,
     wait,
     waterfall,
