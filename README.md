@@ -29,6 +29,9 @@ npm install await-the
 <dt><a href="#module_all">all</a> ⇒ <code>Array</code></dt>
 <dd><p>Given a collection of functions, promises, or basic types &#39;run&#39; them all at a specified limit</p>
 </dd>
+<dt><a href="#module_any">any</a> ⇒ <code>Boolean</code></dt>
+<dd><p>Given a collection and a task return true if any promise resolves</p>
+</dd>
 <dt><a href="#module_callback">callback</a></dt>
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
 or return the error to a callback.</p>
@@ -121,6 +124,32 @@ await the.all(
     ],
     { limit: 2 }
  );
+```
+<a name="module_any"></a>
+
+## any ⇒ <code>Boolean</code>
+Given a collection and a task return true if any promise resolves
+
+**Returns**: <code>Boolean</code> - true if a promise resolves otherwise throws an error  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| collection | <code>Array</code> \| <code>Object</code> | Array or object of items to run the asynchronous task over. |
+| task | <code>function</code> | The async function to be run on each value in the collection. |
+
+**Example**  
+```js
+const the = require('await-the)
+const collection = ['item1', 'item2', 'item3'];
+const task = async (value, index) => {
+    if (index === 1) {
+        return await new Promise(resolve => resolve());
+    } else {
+        throw new Error('test error');
+    }
+};
+const result = await the.any(collection, task);
+// result is true
 ```
 <a name="module_callback"></a>
 
