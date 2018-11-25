@@ -8,10 +8,11 @@ describe('all test', function() {
         const result = await the.all([
             new Promise(resolve => resolve('hello')),
             'world',
-            () => 'how are you?'
+            () => 'how are you?',
+            null
         ]);
 
-        assert.deepStrictEqual(result, ['hello', 'world', 'how are you?']);
+        assert.deepStrictEqual(result, ['hello', 'world', 'how are you?', null]);
     });
 
     it('should run in series if the limit is 1', async () => {
