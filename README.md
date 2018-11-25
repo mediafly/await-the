@@ -26,12 +26,15 @@ npm install await-the
 <dt><a href="#module_Limiter">Limiter</a></dt>
 <dd><p>Given a collection and a task return resolved values of the task being ran per value via the emitters</p>
 </dd>
+<dt><a href="#module_all">all</a> ⇒ <code>Array</code></dt>
+<dd><p>Given a collection of functions, promises, or basic types &#39;run&#39; them all at a specified limit</p>
+</dd>
 <dt><a href="#module_callback">callback</a></dt>
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
 or return the error to a callback.</p>
 </dd>
 <dt><a href="#module_each">each</a></dt>
-<dd><p>Given an array, run the given asynchronous task in parallel for each value of the array.</p>
+<dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
 </dd>
 <dt><a href="#module_map">map</a> ⇒ <code>Array</code></dt>
 <dd><p>Given a collection run a map over it</p>
@@ -94,6 +97,31 @@ limiter.on('error', ({error}) => {
 // begin iteration
 limiter.start();
 ```
+<a name="module_all"></a>
+
+## all ⇒ <code>Array</code>
+Given a collection of functions, promises, or basic types 'run' them all at a specified limit
+
+**Returns**: <code>Array</code> - array of the resolved promises  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| collection | <code>Array</code> \| <code>Object</code> | Array or object of items to run the asynchronous task with. |
+| options | <code>Object</code> | Optional overrides. |
+| options.limit | <code>Number</code> | Optional limit to # of tasks to run in parallel. |
+
+**Example**  
+```js
+const the = require('await-the');
+await the.all(
+    [
+        new Promise(resolve => resolve('hello')),
+        'world',
+        () => 'how are you?'
+    ],
+    { limit: 2 }
+ );
+```
 <a name="module_callback"></a>
 
 ## callback
@@ -127,13 +155,13 @@ myFunc(args, (err, result) => {});
 <a name="module_each"></a>
 
 ## each
-Given an array, run the given asynchronous task in parallel for each value of the array.
+Given a collection, run the given asynchronous task in parallel for each value of the collection.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | collection | <code>Array</code> \| <code>Object</code> | Array or object of items to run the asynchronous task with. |
-| task | <code>function</code> | The async function to be run on each value in the array. |
+| task | <code>function</code> | The async function to be run on each value in the collection. |
 | options | <code>Object</code> | Optional overrides. |
 | options.limit | <code>Number</code> | Optional limit to # of tasks to run in parallel. |
 
@@ -141,7 +169,7 @@ Given an array, run the given asynchronous task in parallel for each value of th
 ```js
 const the = require('await-the');
 await the.each([1,2,3], someAsyncFunction, { limit: 2 });
-// will call `someAsyncFunction` on each value of the array, with at most two functions
+// will call `someAsyncFunction` on each value of the collection, with at most two functions
 // running in parallel at a time.
 ```
 <a name="module_map"></a>
