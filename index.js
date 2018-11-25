@@ -5,7 +5,7 @@
 
 'use strict';
 
-const all = require('p-all');
+const all = require('./lib/all');
 const any = require('p-any');
 const callback = require('./lib/callback');
 const doWhilst = require('p-do-whilst');
