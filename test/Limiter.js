@@ -212,4 +212,136 @@ describe('Limiter test', function() {
 
         assert.strictEqual(error.message, `Channel: gibberish is not valid`);
     });
+
+    describe('bail on error', () => {
+        it('should bail on error if not specified', async () => {
+            return new Promise((resolve, reject) => {
+                let err;
+
+                const proxyDone = async () => {
+                    // give any pending promises a chance to resolve
+                    await the.wait(100);
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 2);
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+
+                const collection = ['item1', 'item2', 'item3'];
+                const limiter = new the.Limiter(collection, async (value, index) => {
+                    if (index === 1) {
+                        throw new Error('test error');
+                    }
+                });
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    return proxyDone();
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                    return proxyDone();
+                });
+
+                limiter.start();
+            });
+        });
+        it('should not bail on error if specified', async () => {
+            return new Promise((resolve, reject) => {
+                let err;
+                const proxyDone = () => {
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 3);
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+                const collection = ['item1', 'item2', 'item3'];
+                const limiter = new the.Limiter(
+                    collection,
+                    async (value, index) => {
+                        if (index === 1) {
+                            throw new Error('test error');
+                        }
+                    },
+                    { bailOnError: false, limit: 1 }
+                );
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    return proxyDone();
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                });
+
+                limiter.start();
+            });
+        });
+    });
+
+    describe('stop', () => {
+        it('should stop iteration after calling stop', async () => {
+            return new Promise((resolve, reject) => {
+                let err;
+
+                const proxyDone = async () => {
+                    // give any pending promises a chance to resolve
+                    await the.wait(100);
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 3);
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+
+                const collection = ['item1', 'item2', 'item3'];
+                const limiter = new the.Limiter(
+                    collection,
+                    async (value, index) => {
+                        if (index === 1) {
+                            throw new Error('test error');
+                        }
+                    },
+                    { bailOnError: false }
+                );
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    return proxyDone();
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                    limiter.stop();
+                });
+
+                limiter.start();
+            });
+        });
+    });
 });
