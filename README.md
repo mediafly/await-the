@@ -139,7 +139,7 @@ Given a collection and a task return true if any promise resolves
 
 **Example**  
 ```js
-const the = require('await-the)
+const the = require('await-the')
 const collection = ['item1', 'item2', 'item3'];
 const task = async (value, index) => {
     if (index === 1) {
