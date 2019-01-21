@@ -285,12 +285,15 @@ Retry promise a given number of times at an interval.
 | options | <code>Object</code> | Optional overrides. |
 | options.maxTries | <code>Number</code> | Maximum number of times to retry to promise. |
 | options.interval | <code>Number</code> \| <code>function</code> | Time to wait in ms between promise executions. |
+| options.errorFilter | <code>Any</code> \| <code>function</code> \| <code>Promise</code> | if supplied only retry if Any === error.message or function returns true |
 
 **Example**  
 ```js
 const the = require('await-the');
 await the.retry(myPromise, { maxTries: 10, interval: 100 });
 await the.retry(myPromise, { maxTries: 10, interval: numTriesSoFar => (numTriesSoFar * 100) });
+await the.retry(myPromise, { maxTries: 10, interval: errorFilter: 'My Expected Error' });
+await the.retry(myPromise, { maxTries: 10, interval: errorFilter: err => err.message === 'My Expected Error' });
 ```
 <a name="module_wait"></a>
 
