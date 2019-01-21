@@ -1,6 +1,6 @@
 {
     "name": "await-the",
-    "version": "3.0.1",
+    "version": "3.1.0",
     "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
     "main": "index.js",
     "author": "Olono, Inc.",
