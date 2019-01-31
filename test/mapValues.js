@@ -36,6 +36,34 @@ describe('Map Values test', function() {
         assert(!!err);
     });
 
+    it('should run in series if the limit is 1', async () => {
+        const collection = ['item1', 'item2', 'item3'];
+        const task = async (value, key) => {
+            await the.wait(500);
+            return `${value}${key}`;
+        };
+
+        const start = Date.now();
+        const output = await the.mapValues(collection, task, { limit: 1 });
+        const duration = Date.now() - start;
+        assert(duration >= 1500, 'Expected promises to run in series');
+        assert.deepStrictEqual(output, { 0: 'item10', 1: 'item21', 2: 'item32' });
+    });
+
+    it('should run in series if the concurrency is 1', async () => {
+        const collection = ['item1', 'item2', 'item3'];
+        const task = async (value, key) => {
+            await the.wait(500);
+            return `${value}${key}`;
+        };
+
+        const start = Date.now();
+        const output = await the.mapValues(collection, task, { concurrency: 1 });
+        const duration = Date.now() - start;
+        assert(duration >= 1500, 'Expected promises to run in series');
+        assert.deepStrictEqual(output, { 0: 'item10', 1: 'item21', 2: 'item32' });
+    });
+
     it('should run in parallel if the limit greater than 1', async () => {
         const collection = {
             'item1.dummy': 'item-1',
