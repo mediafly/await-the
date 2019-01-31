@@ -20,6 +20,20 @@ describe('Map test', function() {
         assert.deepStrictEqual(output, ['item10', 'item21', 'item32']);
     });
 
+    it('should run in series if the concurrency is 1', async () => {
+        const collection = ['item1', 'item2', 'item3'];
+        const task = async (value, key) => {
+            await the.wait(500);
+            return `${value}${key}`;
+        };
+
+        const start = Date.now();
+        const output = await the.map(collection, task, { concurrency: 1 });
+        const duration = Date.now() - start;
+        assert(duration >= 1500, 'Expected promises to run in series');
+        assert.deepStrictEqual(output, ['item10', 'item21', 'item32']);
+    });
+
     it('should run in parallel if the limit greater than 1', async () => {
         const collection = ['item1', 'item2', 'item3'];
         const task = async (value, key) => {
