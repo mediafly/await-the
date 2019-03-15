@@ -3,6 +3,7 @@
 const the = require('../index');
 const _ = require('lodash');
 const assert = require('assert');
+const bluebird = require('bluebird');
 
 describe('Limiter test', function() {
     this.timeout(30000);
@@ -342,6 +343,49 @@ describe('Limiter test', function() {
 
                 limiter.start();
             });
+        });
+    });
+
+    it('should work correctly with ugly promises', async () => {
+        return new Promise((resolve, reject) => {
+            const collection = ['waiter', 'check please'];
+            const limiter = new the.Limiter(
+                collection,
+                // Note that this is NOT an async function.  If it was, it would be wrapped by Node
+                // and return a nice Promise.  Instead, it returns a gnarly Bluebird promise for
+                // which `instanceof Promise` would return `false`.
+                (value, key) => {
+                    if (key === 0) {
+                        return bluebird.delay(1000).then(() => value);
+                    }
+
+                    return value;
+                },
+                { limit: 1 }
+            );
+
+            let results = [];
+            limiter.on('iteration', ({ resultValue }) => {
+                results.push(resultValue);
+            });
+
+            limiter.on('done', () => {
+                try {
+                    assert.strictEqual(_.size(results), 2);
+                    assert.strictEqual(_.first(results), 'waiter');
+                    assert.strictEqual(_.last(results), 'check please');
+                } catch (e) {
+                    return reject(e);
+                }
+
+                return resolve();
+            });
+
+            limiter.on('error', ({ error }) => {
+                return reject(`Got error ${error.message}`);
+            });
+
+            limiter.start();
         });
     });
 });
