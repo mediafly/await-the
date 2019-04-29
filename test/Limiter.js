@@ -420,6 +420,8 @@ describe('Limiter test', function() {
                     // If the event loop is blocked, this will be 10 since the Limiter
                     // will finish before any IO or timer callbacks fire.
                     assert.strictEqual(_.size(results), 12);
+                    // Validate that numeric items were still processed in order.
+                    assert.deepEqual(_.without(results, 'io', 'timer'), collection);
                 } catch (e) {
                     return reject(e);
                 }
