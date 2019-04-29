@@ -3,6 +3,8 @@
 const the = require('../index');
 const _ = require('lodash');
 const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
 const bluebird = require('bluebird');
 
 describe('Limiter test', function() {
@@ -384,6 +386,62 @@ describe('Limiter test', function() {
             limiter.on('error', ({ error }) => {
                 return reject(`Got error ${error.message}`);
             });
+
+            limiter.start();
+        });
+    });
+
+    it('should not block the event loop', async () => {
+        return new Promise((resolve, reject) => {
+            const collection = _.range(0, 10);
+            const limiter = new the.Limiter(
+                collection,
+                async value => {
+                    let now = Date.now();
+                    const start = now;
+                    while (now - start < 100) {
+                        now = Date.now();
+                    }
+                    return value;
+                },
+                { limit: 1 }
+            );
+
+            let results = [];
+            limiter.on('iteration', ({ resultValue }) => {
+                results.push(resultValue);
+            });
+
+            limiter.on('done', () => {
+                try {
+                    // If the event loop is blocked, this will be 10 since the Limiter
+                    // will finish before any IO or timer callbacks fire.
+                    assert.strictEqual(_.size(results), 12);
+                    // Validate that numeric items were still processed in order.
+                    assert.deepEqual(_.without(results, 'io', 'timer'), collection);
+                } catch (e) {
+                    return reject(e);
+                }
+
+                return resolve();
+            });
+
+            limiter.on('error', ({ error }) => {
+                return reject(`Got error ${error.message}`);
+            });
+
+            // Some IO that should happen before the limiter is done.
+            fs.readFile(path.resolve(__dirname, __filename), err => {
+                if (err) {
+                    throw new Error('Error reading file: ', JSON.stringify(err));
+                }
+                results.push('io');
+            });
+
+            // A timer that should happen before the limiter is done.
+            setTimeout(() => {
+                results.push('timer');
+            }, 50);
 
             limiter.start();
         });
