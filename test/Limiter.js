@@ -396,9 +396,6 @@ describe('Limiter test', function() {
             const collection = _.range(0, 10);
             const limiter = new the.Limiter(
                 collection,
-                // Note that this is NOT an async function.  If it was, it would be wrapped by Node
-                // and return a nice Promise.  Instead, it returns a gnarly Bluebird promise for
-                // which `instanceof Promise` would return `false`.
                 async value => {
                     let now = Date.now();
                     const start = now;
