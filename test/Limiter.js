@@ -202,6 +202,54 @@ describe('Limiter test', function() {
         });
     });
 
+    it('should work correctly when presented with keys that start with numbers or are stringified numbers', async () => {
+        return new Promise((resolve, reject) => {
+            const collection = { '123abc': 'foo', '234': 'bar', '56d': 'baz' };
+
+            const limiter = new the.Limiter(
+                collection,
+                async (value, key) => {
+                    if (key === '123abc') {
+                        return 'fooey';
+                    }
+                    if (key === '234') {
+                        return 'barry';
+                    }
+                    if (key === '56d') {
+                        return 'bazzy';
+                    }
+                    throw new Error('unexpected key!');
+                },
+                { limit: 2 }
+            );
+
+            let results = {};
+            limiter.on('iteration', ({ resultValue, key }) => {
+                results[key] = resultValue;
+            });
+
+            limiter.on('done', () => {
+                try {
+                    assert.deepStrictEqual(results, {
+                        '123abc': 'fooey',
+                        '234': 'barry',
+                        '56d': 'bazzy'
+                    });
+                } catch (e) {
+                    return reject(e);
+                }
+
+                return resolve();
+            });
+
+            limiter.on('error', ({ error }) => {
+                return reject(`got error ${error}`);
+            });
+
+            limiter.start();
+        });
+    });
+
     it('should throw for invalid channel', () => {
         const collection = [];
         const limiter = new the.Limiter(collection);
