@@ -55,6 +55,12 @@ and return the result.</p>
 <dt><a href="#module_wait">wait</a> ⇒ <code>Promise</code></dt>
 <dd><p>Promise based wait utility.</p>
 </dd>
+<dt><a href="#module_while">while</a> ⇒ <code>*</code></dt>
+<dd><p>Given a condition and function, continuously call the promisified version of that function sequentially
+and return the result once the exiting condition is met.</p>
+<p>The <code>condition</code> can access either the parent scoped variables or the results of <code>fn</code> which are passed in
+as the only parameter.</p>
+</dd>
 </dl>
 
 <a name="module_Limiter"></a>
@@ -310,6 +316,37 @@ Promise based wait utility.
 const the = require('await-the');
 // wait for 1 second before returning
 await the.wait(1000);
+```
+<a name="module_while"></a>
+
+## while ⇒ <code>\*</code>
+Given a condition and function, continuously call the promisified version of that function sequentially
+and return the result once the exiting condition is met.
+
+The `condition` can access either the parent scoped variables or the results of `fn` which are passed in
+as the only parameter.
+
+**Returns**: <code>\*</code> - The thrown error or the result.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| condition | <code>function</code> | The condition to continue looping. |
+| fn | <code>function</code> \| <code>Array</code> | The function to be resolved (or rejected) every loop. |
+| ...args | <code>\*</code> | Variadic arguments to send to the function. |
+
+**Example**  
+```js
+const the = require('await-the');
+let sum = 0;
+const condition = previousResult => sum < 10;
+const asyncFn = x => {
+    sum += x;
+    return sum * 10;
+}
+const result = await the.while(condition, asyncFn, 2);
+// will loop while sum < 10, then return the final function result
+// sum === 10
+// result === 100
 ```
 
 ## NPM Options
