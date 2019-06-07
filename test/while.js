@@ -48,6 +48,34 @@ describe('While test', function() {
         assert.strictEqual(result, 15);
     });
 
+    it('should correctly test async conditions.', async () => {
+        let sum = 0;
+        const condition = async () => await false;
+        const asyncSum = (x, y) => {
+            return new Promise(resolve => {
+                sum = x + y;
+                resolve(sum);
+            });
+        };
+        const result = await the.while(condition, asyncSum, 10, 5);
+        assert.strictEqual(sum, 0);
+        assert.strictEqual(result, undefined);
+    });
+
+    it('should correctly test promisified conditions.', async () => {
+        let sum = 0;
+        const condition = () => new Promise(resolve => resolve(false));
+        const asyncSum = (x, y) => {
+            return new Promise(resolve => {
+                sum = x + y;
+                resolve(sum);
+            });
+        };
+        const result = await the.while(condition, asyncSum, 10, 5);
+        assert.strictEqual(sum, 0);
+        assert.strictEqual(result, undefined);
+    });
+
     it('should fail on rejected promises', async () => {
         let errorMessage = 'Fail test';
         try {
