@@ -16,6 +16,7 @@ const map = require('./lib/map');
 const mapValues = require('./lib/mapValues');
 const result = require('./lib/result');
 const retry = require('./lib/retry');
+const awaitWhile = require('./lib/while');
 const times = require('p-times');
 const wait = require('./lib/wait');
 const waterfall = require('p-waterfall');
@@ -38,5 +39,6 @@ module.exports = {
     times,
     wait,
     waterfall,
-    whilst
+    whilst,
+    while: awaitWhile
 };
