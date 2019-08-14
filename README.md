@@ -36,6 +36,9 @@ npm install await-the
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
 or return the error to a callback.</p>
 </dd>
+<dt><a href="#module_each">each</a> ⇒ <code>Promise</code></dt>
+<dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
+</dd>
 <dt><a href="#module_each">each</a></dt>
 <dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
 </dd>
@@ -186,6 +189,24 @@ const myFunc = async (args, callback) => {
 await myFunc(args);
 // or as a callback
 myFunc(args, (err, result) => {});
+```
+<a name="module_each"></a>
+
+## each ⇒ <code>Promise</code>
+Given a collection, run the given asynchronous task in parallel for each value of the collection.
+
+**Returns**: <code>Promise</code> - A promise  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| task | <code>function</code> | The async function to be run on each value in the collection. |
+| time | <code>Number</code> | The time in milliseconds this request should be allowed to run. |
+
+**Example**  
+```js
+const the = require('await-the');
+await the.deadline(someAsyncFunction, 5000);
+// will call `someAsyncFunction` and let it execute for 5000 ms, rejecting if it exceeds that time.
 ```
 <a name="module_each"></a>
 
