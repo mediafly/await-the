@@ -206,6 +206,7 @@ On timeout, this does NOT abort the execution of the function!
 | --- | --- | --- |
 | task | <code>function</code> | The async function to be run. |
 | time | <code>Number</code> | The time in milliseconds this function should be allowed to run. |
+| error | <code>String</code> | Optionally, a custom error message to use. |
 
 **Example**  
 ```js

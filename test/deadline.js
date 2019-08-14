@@ -36,6 +36,24 @@ describe('deadline test', function() {
         }
 
         assert(!!error, `Expected the Promise to be rejected`);
+        assert.equal(error.message, 'timeout');
+    });
+
+    it('should reject the Promise if it executes over the time limit with a custom error message', async () => {
+        const task = async () => {
+            await the.wait(5000);
+            return 'success';
+        };
+
+        let error;
+        try {
+            await the.deadline(task, 1000, 'not fast enough');
+        } catch (err) {
+            error = err;
+        }
+
+        assert(!!error, `Expected the Promise to be rejected`);
+        assert.equal(error.message, 'not fast enough');
     });
 
     it('should work with Promises rather than async/await', done => {
