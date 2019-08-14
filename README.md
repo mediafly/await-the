@@ -36,8 +36,10 @@ npm install await-the
 <dd><p>Utility for making optional callbacks easier. If an error param exists, it will throw an error for promises
 or return the error to a callback.</p>
 </dd>
-<dt><a href="#module_each">each</a> ⇒ <code>Promise</code></dt>
-<dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
+<dt><a href="#module_deadline">deadline</a> ⇒ <code>Promise</code></dt>
+<dd><p>Run the passed function, if it takes longer than the configured time throw an error, otherwise
+return the results of the original function execution.</p>
+<p>On timeout, this does NOT abort the execution of the function!</p>
 </dd>
 <dt><a href="#module_each">each</a></dt>
 <dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
@@ -190,10 +192,13 @@ await myFunc(args);
 // or as a callback
 myFunc(args, (err, result) => {});
 ```
-<a name="module_each"></a>
+<a name="module_deadline"></a>
 
-## each ⇒ <code>Promise</code>
-Given a collection, run the given asynchronous task in parallel for each value of the collection.
+## deadline ⇒ <code>Promise</code>
+Run the passed function, if it takes longer than the configured time throw an error, otherwise
+return the results of the original function execution.
+
+On timeout, this does NOT abort the execution of the function!
 
 **Returns**: <code>Promise</code> - A promise  
 
