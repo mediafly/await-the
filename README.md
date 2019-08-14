@@ -199,8 +199,8 @@ Given a collection, run the given asynchronous task in parallel for each value o
 
 | Param | Type | Description |
 | --- | --- | --- |
-| task | <code>function</code> | The async function to be run on each value in the collection. |
-| time | <code>Number</code> | The time in milliseconds this request should be allowed to run. |
+| task | <code>function</code> | The async function to be run. |
+| time | <code>Number</code> | The time in milliseconds this function should be allowed to run. |
 
 **Example**  
 ```js
