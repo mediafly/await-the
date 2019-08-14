@@ -1,20 +1,19 @@
 const assert = require('assert');
 
-const deadline = require('../lib/deadline');
-const wait = require('../lib/wait');
+const the = require('../index');
 
 describe('deadline test', function() {
     this.timeout(30000);
 
     it('should resolve the task if it executes under the time limit', async () => {
         const task = async () => {
-            await wait(1000);
+            await the.wait(1000);
             return 'success';
         };
 
         let result, error;
         try {
-            result = await deadline(task, 5000);
+            result = await the.deadline(task, 5000);
         } catch (err) {
             error = err;
         }
@@ -25,13 +24,13 @@ describe('deadline test', function() {
 
     it('should reject the Promise if it executes over the time limit', async () => {
         const task = async () => {
-            await wait(5000);
+            await the.wait(5000);
             return 'success';
         };
 
         let error;
         try {
-            await deadline(task, 1000);
+            await the.deadline(task, 1000);
         } catch (err) {
             error = err;
         }
@@ -47,7 +46,7 @@ describe('deadline test', function() {
         };
 
         let result, error;
-        deadline(task, 5000)
+        the.deadline(task, 5000)
             .then(
                 r => {
                     result = r;
