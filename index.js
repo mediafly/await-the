@@ -8,6 +8,7 @@
 const all = require('./lib/all');
 const any = require('./lib/any');
 const callback = require('./lib/callback');
+const deadline = require('./lib/deadline');
 const doWhilst = require('p-do-whilst');
 const each = require('./lib/each');
 const every = require('p-every');
@@ -26,6 +27,7 @@ module.exports = {
     all,
     any,
     callback,
+    deadline,
     doWhilst,
     each,
     end: all,
