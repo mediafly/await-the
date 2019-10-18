@@ -1,6 +1,6 @@
 {
     "name": "await-the",
-    "version": "3.2.0",
+    "version": "4.0.0",
     "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
     "main": "index.js",
     "author": "Olono, Inc.",
@@ -30,7 +30,6 @@
     "dependencies": {
         "lodash": "^4.17.15",
         "p-do-whilst": "^0.1.0",
-        "p-every": "^1.0.2",
         "p-times": "^1.0.1",
         "p-waterfall": "^1.0.0",
         "p-whilst": "^1.0.0"
