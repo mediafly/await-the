@@ -51,4 +51,23 @@ describe('every test', function() {
         assert(err);
         assert(err instanceof Error);
     });
+
+    it('should work for a collection that is an object', async () => {
+        const collection = {
+            item1: 'boi',
+            item2: 'bruh'
+        };
+        const task = async (value, index) => {
+            if (index === 'item1' && value !== 'boi') {
+                throw new Error();
+            }
+
+            if (index === 'item2' && value !== 'bruh') {
+                throw new Error();
+            }
+        };
+
+        const output = await the.every(collection, task);
+        assert(output);
+    });
 });
