@@ -44,11 +44,19 @@ return the results of the original function execution.</p>
 <dt><a href="#module_each">each</a></dt>
 <dd><p>Given a collection, run the given asynchronous task in parallel for each value of the collection.</p>
 </dd>
+<dt><a href="#module_every">every</a> ⇒ <code>Boolean</code></dt>
+<dd><p>Given a collection and a task return true if all promises resolve.
+Will bail on first error</p>
+</dd>
 <dt><a href="#module_map">map</a> ⇒ <code>Array</code></dt>
 <dd><p>Given a collection run a map over it</p>
 </dd>
 <dt><a href="#module_mapValues">mapValues</a> ⇒ <code>Object</code></dt>
 <dd><p>Given an object of key-value pairs, run the given asynchronous task in parallel for each pair.</p>
+</dd>
+<dt><a href="#module_multiResult">multiResult</a> ⇒ <code>Array</code></dt>
+<dd><p>Given a function that expects a callback as its last argument, await a promisified version of that function
+and return the arguments sent to the callback as an array.</p>
 </dd>
 <dt><a href="#module_result">result</a> ⇒ <code>*</code></dt>
 <dd><p>Given a function that expects a callback as its last argument, await a promisified version of that function
@@ -234,6 +242,31 @@ await the.each([1,2,3], someAsyncFunction, { limit: 2 });
 // will call `someAsyncFunction` on each value of the collection, with at most two functions
 // running in parallel at a time.
 ```
+<a name="module_every"></a>
+
+## every ⇒ <code>Boolean</code>
+Given a collection and a task return true if all promises resolve.
+Will bail on first error
+
+**Returns**: <code>Boolean</code> - true if all promises resolve, otherwise throws the error from the first rejected promise it encounters  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| collection | <code>Array</code> \| <code>Object</code> |  | Array or object of items to run the asynchronous task over. |
+| task | <code>function</code> |  | Promise to be awaited for each key, called with (value, key). |
+| options | <code>Object</code> |  | Optional overrides. |
+| options.limit | <code>Number</code> | <code>Infinity</code> | Number of concurrently pending promises returned by mapper. |
+
+**Example**  
+```js
+const the = require('await-the')
+const collection = ['item1', 'item2', 'item3'];
+const task = async (value, index) => {
+    return await new Promise(resolve => resolve());
+};
+const result = await the.every(collection, task);
+// result is true
+```
 <a name="module_map"></a>
 
 ## map ⇒ <code>Array</code>
@@ -277,6 +310,33 @@ const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
     return somePromise(value);
 });
 // result is now an object with {key1: <resolved promise> }
+```
+<a name="module_multiResult"></a>
+
+## multiResult ⇒ <code>Array</code>
+Given a function that expects a callback as its last argument, await a promisified version of that function
+and return the arguments sent to the callback as an array.
+
+**Returns**: <code>Array</code> - The arguments sent to the callback, including the error.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fn | <code>function</code> \| <code>Array</code> | The async function to promisify and call, or an array of [class, method name]. |
+| ...args | <code>\*</code> | Variadic arguments to send to the function, _excluding_ the callback.  Note that _all_ parameters of the function besides the callback must have values supplied, even if they're optional. |
+
+**Example**  
+```js
+const the = require('await-the');
+const asyncSum = (x, y, callback) => callback(null, x + y, x * y);
+const [err, sum, product] = await the.multiResult(asyncSum, 1, 2);
+// will assign null to `err`, 3 to `sum` and 2 to `product`.
+
+await the.multiResult([someObj, 'someFnName'], 1, 2);
+// equivalent of `await the.multiResult(someObj.someFnName.bind(someObj), 1, 2)`
+
+const someFnWithOptionalArgs = (x, y = 1, opts = {}, callback) => callback(null, x + y);
+await the.multiResult(someFnWithOptionalArgs, 2, 1, {});
+// if the function has optional params before the callback, values must be supplied for all
 ```
 <a name="module_result"></a>
 

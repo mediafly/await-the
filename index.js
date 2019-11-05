@@ -16,6 +16,7 @@ const Limiter = require('./lib/Limiter');
 const map = require('./lib/map');
 const mapValues = require('./lib/mapValues');
 const result = require('./lib/result');
+const multiResult = require('./lib/multiResult');
 const retry = require('./lib/retry');
 const awaitWhile = require('./lib/while');
 const times = require('p-times');
@@ -36,6 +37,7 @@ module.exports = {
     map,
     mapValues,
     result,
+    multiResult,
     retry,
     some: any,
     times,
