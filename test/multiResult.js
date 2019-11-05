@@ -1,7 +1,7 @@
 const assert = require('assert');
 const the = require('../index');
 
-describe.only('multiResult test', function() {
+describe('multiResult test', function() {
     this.timeout(30000);
 
     it('should return the correct results with a standard (null, result) callback', async () => {

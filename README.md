@@ -54,7 +54,7 @@ Will bail on first error</p>
 <dt><a href="#module_mapValues">mapValues</a> ⇒ <code>Object</code></dt>
 <dd><p>Given an object of key-value pairs, run the given asynchronous task in parallel for each pair.</p>
 </dd>
-<dt><a href="#module_result">result</a> ⇒ <code>Array</code></dt>
+<dt><a href="#module_multiResult">multiResult</a> ⇒ <code>Array</code></dt>
 <dd><p>Given a function that expects a callback as its last argument, await a promisified version of that function
 and return the arguments sent to the callback as an array.</p>
 </dd>
@@ -311,9 +311,9 @@ const result = await the.mapValues({key1: 'value1'}, async (value, key) => {
 });
 // result is now an object with {key1: <resolved promise> }
 ```
-<a name="module_result"></a>
+<a name="module_multiResult"></a>
 
-## result ⇒ <code>Array</code>
+## multiResult ⇒ <code>Array</code>
 Given a function that expects a callback as its last argument, await a promisified version of that function
 and return the arguments sent to the callback as an array.
 
