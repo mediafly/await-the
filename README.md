@@ -74,6 +74,13 @@ and return the result once the exiting condition is met.</p>
 <p>The <code>condition</code> can access either the parent scoped variables or the results of <code>fn</code> which are passed in
 as the only parameter.</p>
 </dd>
+<dt><a href="#module_whileMax">whileMax</a> ⇒ <code>*</code></dt>
+<dd><p>Given a condition, maximum amount of loops to do, and function, continuously call the promisified version
+of that function sequentially and return the result once the exiting condition is met or the loop count
+has been exhausted.</p>
+<p>The <code>condition</code> can access either the parent scoped variables or the results of <code>fn</code> which are passed in
+as the only parameter.</p>
+</dd>
 </dl>
 
 <a name="module_Limiter"></a>
@@ -434,6 +441,40 @@ const result = await the.while(condition, asyncFn, 2);
 // will loop while sum < 10, then return the final function result
 // sum === 10
 // result === 100
+```
+<a name="module_whileMax"></a>
+
+## whileMax ⇒ <code>\*</code>
+Given a condition, maximum amount of loops to do, and function, continuously call the promisified version
+of that function sequentially and return the result once the exiting condition is met or the loop count
+has been exhausted.
+
+The `condition` can access either the parent scoped variables or the results of `fn` which are passed in
+as the only parameter.
+
+**Returns**: <code>\*</code> - The thrown error or the result.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| condition | <code>function</code> | The condition to continue looping. |
+| max | <code>Number</code> | The maximum amount of loops to do. |
+| fn | <code>function</code> \| <code>Array</code> | The function to be resolved (or rejected) every loop. |
+| ...args | <code>\*</code> | Variadic arguments to send to the function. |
+
+**Example**  
+```js
+const the = require('await-the');
+let sum = 0;
+const max = 2;
+const condition = previousResult => sum < 10;
+const asyncFn = x => {
+    sum += x;
+    return sum * 10;
+}
+const result = await the.whileMax(condition, max, asyncFn, 2);
+// is cut off by hitting the max loops possible
+// sum === 4
+// result === 40
 ```
 
 ## NPM Options

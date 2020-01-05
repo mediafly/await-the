@@ -19,6 +19,7 @@ const result = require('./lib/result');
 const multiResult = require('./lib/multiResult');
 const retry = require('./lib/retry');
 const awaitWhile = require('./lib/while');
+const whileMax = require('./lib/whileMax');
 const times = require('p-times');
 const wait = require('./lib/wait');
 const waterfall = require('p-waterfall');
@@ -44,5 +45,6 @@ module.exports = {
     wait,
     waterfall,
     whilst,
-    while: awaitWhile
+    while: awaitWhile,
+    whileMax
 };
