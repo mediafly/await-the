@@ -2,14 +2,7 @@
     "extends": "eslint:recommended",
     "plugins": ["prettier"],
     "rules": {
-        "prettier/prettier": [
-            "error",
-            {
-                "singleQuote": true,
-                "tabWidth": 4,
-                "printWidth": 110
-            }
-        ],
+        "prettier/prettier": ["error"],
         "valid-jsdoc": [
             "error",
             {
