@@ -1,6 +1,6 @@
 {
     "name": "await-the",
-    "version": "4.2.0",
+    "version": "4.2.1",
     "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
     "main": "index.js",
     "author": "Olono, Inc.",
@@ -36,13 +36,13 @@
     },
     "devDependencies": {
         "bluebird": "^3.5.3",
-        "eslint": "^4.18.2",
-        "eslint-config-prettier": "^2.9.0",
-        "eslint-plugin-prettier": "^2.6.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-prettier": "^3.1.2",
         "jsdoc-to-markdown": "^4.0.1",
         "mocha": "^5.0.1",
         "nyc": "^13.0.1",
-        "prettier": "^1.18.2",
-        "prettier-eslint-cli": "^4.7.1"
+        "prettier": "^1.19.1",
+        "prettier-eslint-cli": "^5.0.0"
     }
 }
