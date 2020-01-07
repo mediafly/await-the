@@ -75,9 +75,9 @@ and return the result once the exiting condition is met.</p>
 as the only parameter.</p>
 </dd>
 <dt><a href="#module_whileMax">whileMax</a> ⇒ <code>*</code></dt>
-<dd><p>Given a condition, maximum amount of loops to do, and function, continuously call the promisified version
-of that function sequentially and return the result once the exiting condition is met or the loop count
-has been exhausted.</p>
+<dd><p>Given a condition, maximum amount of loop iterations to do, and function, continuously call the promisified
+version of that function sequentially and return the result once the exiting condition is met or the loop
+count has been exhausted.</p>
 <p>The <code>condition</code> can access either the parent scoped variables or the results of <code>fn</code> which are passed in
 as the only parameter.</p>
 </dd>
@@ -445,9 +445,9 @@ const result = await the.while(condition, asyncFn, 2);
 <a name="module_whileMax"></a>
 
 ## whileMax ⇒ <code>\*</code>
-Given a condition, maximum amount of loops to do, and function, continuously call the promisified version
-of that function sequentially and return the result once the exiting condition is met or the loop count
-has been exhausted.
+Given a condition, maximum amount of loop iterations to do, and function, continuously call the promisified
+version of that function sequentially and return the result once the exiting condition is met or the loop
+count has been exhausted.
 
 The `condition` can access either the parent scoped variables or the results of `fn` which are passed in
 as the only parameter.
@@ -457,7 +457,7 @@ as the only parameter.
 | Param | Type | Description |
 | --- | --- | --- |
 | condition | <code>function</code> | The condition to continue looping. |
-| max | <code>Number</code> | The maximum amount of loops to do. |
+| maxIterations | <code>Number</code> | The maximum amount of loop iterations to be done. |
 | fn | <code>function</code> \| <code>Array</code> | The function to be resolved (or rejected) every loop. |
 | ...args | <code>\*</code> | Variadic arguments to send to the function. |
 

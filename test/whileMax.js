@@ -126,4 +126,46 @@ describe('While test', function() {
             assert.strictEqual(error.message, errorMessage);
         }
     });
+
+    it('should fail on NaN max iterations', async () => {
+        const nanValues = [undefined, 'string', {}, [1, 2, 3]];
+
+        for (const value of nanValues) {
+            try {
+                await the.whileMax(
+                    () => true,
+                    value,
+                    () => {
+                        throw new Error('Should not get to the condition');
+                    }
+                );
+                assert(false, 'should never get here');
+            } catch (error) {
+                assert(error);
+                assert.strictEqual(error.message, `The max iterations is not a number: ${value}`);
+            }
+        }
+    });
+
+    it('should fail on being less than 1 max iterations', async () => {
+        const invalidValues = [0, -1, -0.5, null, '', []];
+
+        for (const value of invalidValues) {
+            try {
+                await the.whileMax(
+                    () => true,
+                    value,
+                    () => {
+                        throw new Error('Should not get to the condition');
+                    }
+                );
+                assert(false, 'should never get here');
+            } catch (error) {
+                assert(error);
+                assert(
+                    error.message.includes('The whileMax function was started with an invalid max iterations')
+                );
+            }
+        }
+    });
 });
