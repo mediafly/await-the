@@ -15,7 +15,7 @@ blocks:
       jobs:
         - name: Deploy
           commands:
-            - npm publish --access restricted
+            - npm publish --access public
       epilogue:
         on_pass:
           commands:
