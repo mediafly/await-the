@@ -1,7 +1,7 @@
 const assert = require('assert');
 const the = require('../index');
 
-describe('all test', function() {
+describe('any test', function() {
     this.timeout(30000);
 
     it('should return true for a promise that passes', async () => {
