@@ -1,9 +1,9 @@
 {
     "name": "await-the",
-    "version": "4.3.2",
+    "version": "4.3.3",
     "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
     "main": "index.js",
-    "author": "Olono, Inc.",
+    "author": "Mediafly, Inc.",
     "scripts": {
         "test": "npm run lint && nyc mocha --bail --exit test",
         "lint": "eslint .",
@@ -21,10 +21,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/olono/await-the.git"
+        "url": "https://github.com/mediafly/await-the.git"
     },
     "bugs": {
-        "url": "https://github.com/olono/await-the/issues"
+        "url": "https://github.com/mediafly/await-the/issues"
     },
     "license": "MIT",
     "dependencies": {
