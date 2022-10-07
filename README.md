@@ -1,6 +1,6 @@
 # Await The Promise
 
-[![Build Status](https://mediafly.semaphoreci.com/badges/await-the.svg)](https://mediafly.semaphoreci.com/projects/await-the)
+[![Build Status](https://mediafly.semaphoreci.com/badges/await-the/branches/main.svg)](https://mediafly.semaphoreci.com/projects/await-the)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 A utility which provides straight-forward, powerful functions for working with async/await in JavaScript.
