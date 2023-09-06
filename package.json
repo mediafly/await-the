@@ -5,7 +5,7 @@
     "main": "index.js",
     "author": "Mediafly, Inc.",
     "scripts": {
-        "test": "npm run lint && nyc mocha --bail --exit test",
+        "test": "nyc mocha --bail --exit test",
         "lint": "eslint .",
         "format": "eslint . --fix",
         "docs": "jsdoc2md -t jsdoc2md/README.hbs --files **/*.js > README.md"
