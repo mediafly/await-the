@@ -24,7 +24,7 @@ blocks:
         - name: "Lint & Test"
           matrix:
             - env_var: 'NODE_VERSION'
-              values: ['10', '12', '14', '16', '18']
+              values: ['12', '14', '16', '18']
           commands:
             - sem-version node $NODE_VERSION
             - checkout
