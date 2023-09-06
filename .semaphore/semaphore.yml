@@ -18,16 +18,19 @@ blocks:
   - name: "Build"
     dependencies: []
     task:
-      - name: "Lint & Test"
-        matrix:
-          - env_var: 'NODE_VERSION'
-            values: ['10', '12', '14', '16', '18']
-        commands:
-          - sem-version node $NODE_VERSION
-          - checkout
-          - npm install
-          - npm run lint
-          - npm test
+      secrets:
+        - name: npm
+      jobs:
+        - name: "Lint & Test"
+          matrix:
+            - env_var: 'NODE_VERSION'
+              values: ['10', '12', '14', '16', '18']
+          commands:
+            - sem-version node $NODE_VERSION
+            - checkout
+            - npm install
+            - npm run lint
+            - npm test
 
 promotions:
   - name: production
