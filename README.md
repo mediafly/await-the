@@ -200,7 +200,7 @@ const myFunc = async (args, callback) => {
         const result = await somePromise();
         return the.callback(callback, null, result);
     } catch (e) {
-        return the.callback(callback, e.message);
+        return the.callback(callback, e);
     }
 };
 
