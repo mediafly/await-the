@@ -1,7 +1,9 @@
 # Await The Promise
 
-[![Build Status](https://mediafly.semaphoreci.com/badges/await-the/branches/main.svg)](https://mediafly.semaphoreci.com/projects/await-the)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Build
+Status](https://mediafly.semaphoreci.com/badges/await-the/branches/main.svg)](https://mediafly.semaphoreci.com/projects/await-the)
+[![code style:
+prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 A utility which provides straight-forward, powerful functions for working with async/await in JavaScript.
 
@@ -24,7 +26,7 @@ npm install await-the
 
 <dl>
 <dt><a href="#module_Limiter">Limiter</a></dt>
-<dd><p>Given a collection and a task return resolved values of the task being ran per value via the emitters</p>
+<dd><p>Given a collection and a task, return resolved values of the task being ran per value via emitted events.</p>
 </dd>
 <dt><a href="#module_all">all</a> ⇒ <code>Array</code></dt>
 <dd><p>Given a collection of functions, promises, or basic types &#39;run&#39; them all at a specified limit</p>
@@ -86,7 +88,7 @@ as the only parameter.</p>
 <a name="module_Limiter"></a>
 
 ## Limiter
-Given a collection and a task return resolved values of the task being ran per value via the emitters
+Given a collection and a task, return resolved values of the task being ran per value via emitted events.
 
 
 | Param | Type | Description |
@@ -512,4 +514,3 @@ Updates this README with the [API Reference](#api-reference).
 ```bash
 npm run docs
 ```
-

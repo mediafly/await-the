@@ -4,7 +4,7 @@ name: await-the
 agent:
   machine:
     type: e1-standard-2
-    os_image: ubuntu1804
+    os_image: ubuntu2004
 
 fail_fast:
   stop:
@@ -20,14 +20,15 @@ blocks:
     task:
       prologue:
         commands:
-          - sem-version node 10.15.3
+          - sem-version node 18
           - checkout
           - npm install
       secrets:
         - name: npm
       jobs:
-        - name: "Test"
+        - name: "Lint & Test"
           commands:
+            - npm run lint
             - npm test
 
 promotions:
