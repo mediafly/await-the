@@ -263,6 +263,7 @@ describe('Limiter test', function() {
 
         assert.strictEqual(error.message, `Channel: gibberish is not valid`);
     });
+
     it('should work correctly with ugly promises', async () => {
         return new Promise((resolve, reject) => {
             const collection = ['waiter', 'check please'];
