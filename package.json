@@ -1,11 +1,15 @@
 {
     "name": "await-the",
+<<<<<<< HEAD
     "version": "4.4.0",
+=======
+    "version": "4.3.4",
+>>>>>>> main
     "description": "A utility module which provides straight-forward, powerful functions for working with async/await in JavaScript.",
     "main": "index.js",
     "author": "Mediafly, Inc.",
     "scripts": {
-        "test": "mocha --bail --exit test",
+        "test": "nyc mocha --bail --exit test",
         "lint": "eslint .",
         "format": "eslint . --fix",
         "docs": "jsdoc2md -t jsdoc2md/README.hbs --files **/*.js > README.md"
