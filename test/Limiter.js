@@ -465,7 +465,7 @@ describe('Limiter test', function() {
             // - On the first item, we emit the iteration event and increment iterations counter
             // - On the second item (ie index 1) we emit an error. As bailOnError is false, we also emit the iteration event
             //   and increment the counter. The error event handler invokes `stop()`.
-            // - On the third item we see that stop has been invoked, and emit the done event.
+            // - On the third item we see that stop has been invoked
             // - The fourth item should never be processed.
             return new Promise((resolve, reject) => {
                 let err;
@@ -500,12 +500,15 @@ describe('Limiter test', function() {
                 });
 
                 limiter.on('done', () => {
-                    return proxyDone();
+                    // ERROR PATH, this shouldn't be invoked
+                    return reject('done event should not have been emitted');
                 });
 
                 limiter.on('error', ({ error }) => {
                     err = error;
                     limiter.stop();
+
+                    return proxyDone();
                 });
 
                 limiter.start();
