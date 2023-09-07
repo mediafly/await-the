@@ -264,138 +264,6 @@ describe('Limiter test', function() {
         assert.strictEqual(error.message, `Channel: gibberish is not valid`);
     });
 
-    describe('bail on error', () => {
-        it('should bail on error if not specified', async () => {
-            return new Promise((resolve, reject) => {
-                let err;
-
-                const proxyDone = async () => {
-                    // give any pending promises a chance to resolve
-                    await the.wait(100);
-                    try {
-                        assert(err, 'expected err to exist');
-                        assert.strictEqual(iterations, 2);
-                    } catch (e) {
-                        return reject(e);
-                    }
-
-                    return resolve();
-                };
-
-                const collection = ['item1', 'item2', 'item3'];
-                const limiter = new the.Limiter(collection, async (value, index) => {
-                    if (index === 1) {
-                        throw new Error('test error');
-                    }
-                });
-
-                let iterations = 0;
-                limiter.on('iteration', () => {
-                    iterations++;
-                });
-
-                limiter.on('done', () => {
-                    return proxyDone();
-                });
-
-                limiter.on('error', ({ error }) => {
-                    err = error;
-                    return proxyDone();
-                });
-
-                limiter.start();
-            });
-        });
-        it('should not bail on error if specified', async () => {
-            return new Promise((resolve, reject) => {
-                let err;
-                const proxyDone = () => {
-                    try {
-                        assert(err, 'expected err to exist');
-                        assert.strictEqual(iterations, 3);
-                    } catch (e) {
-                        return reject(e);
-                    }
-
-                    return resolve();
-                };
-                const collection = ['item1', 'item2', 'item3'];
-                const limiter = new the.Limiter(
-                    collection,
-                    async (value, index) => {
-                        if (index === 1) {
-                            throw new Error('test error');
-                        }
-                    },
-                    { bailOnError: false, limit: 1 }
-                );
-
-                let iterations = 0;
-                limiter.on('iteration', () => {
-                    iterations++;
-                });
-
-                limiter.on('done', () => {
-                    return proxyDone();
-                });
-
-                limiter.on('error', ({ error }) => {
-                    err = error;
-                });
-
-                limiter.start();
-            });
-        });
-    });
-
-    describe('stop', () => {
-        it('should stop iteration after calling stop', async () => {
-            return new Promise((resolve, reject) => {
-                let err;
-
-                const proxyDone = async () => {
-                    // give any pending promises a chance to resolve
-                    await the.wait(100);
-                    try {
-                        assert(err, 'expected err to exist');
-                        assert.strictEqual(iterations, 3);
-                    } catch (e) {
-                        return reject(e);
-                    }
-
-                    return resolve();
-                };
-
-                const collection = ['item1', 'item2', 'item3'];
-                const limiter = new the.Limiter(
-                    collection,
-                    async (value, index) => {
-                        if (index === 1) {
-                            throw new Error('test error');
-                        }
-                    },
-                    { bailOnError: false }
-                );
-
-                let iterations = 0;
-                limiter.on('iteration', () => {
-                    iterations++;
-                });
-
-                limiter.on('done', () => {
-                    return proxyDone();
-                });
-
-                limiter.on('error', ({ error }) => {
-                    err = error;
-                    limiter.stop();
-                });
-
-                limiter.start();
-            });
-        });
-    });
-
     it('should work correctly with ugly promises', async () => {
         return new Promise((resolve, reject) => {
             const collection = ['waiter', 'check please'];
@@ -492,6 +360,160 @@ describe('Limiter test', function() {
             }, 50);
 
             limiter.start();
+        });
+    });
+
+    describe('bail on error', () => {
+        it('should bail on error by default', async () => {
+            // Three items in the collectino, parallelism 1, so should expect 3 events by default
+            // - On the first item, we emit the iteration event and increment iterations counter
+            // - On the second item (index 1) we emit an error event. As bailOnError is true, we do NOT emit an iteration event and do not continue processing.
+            // - The third item should never be processed.
+            return new Promise((resolve, reject) => {
+                let err;
+
+                const proxyDone = async () => {
+                    // give any pending promises a chance to resolve
+                    await the.wait(100);
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 1, 'Expected only two iterations');
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+
+                const collection = ['item1', 'item2', 'item3'];
+                const limiter = new the.Limiter(
+                    collection,
+                    async (value, index) => {
+                        if (index === 1) {
+                            throw new Error('test error');
+                        }
+                    },
+                    { limit: 1 }
+                );
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    reject('done event should not have been emitted');
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                    return proxyDone();
+                });
+
+                limiter.start();
+            });
+        });
+
+        it('should not bail on error if specified', async () => {
+            // Three items in the collectino, parallelism 1, so should expect 3 events by default
+            // - On the first item, we emit the iteration event and increment iterations counter
+            // - On the second item (index 1) we emit an error event. As bailOnError is false, we also emit the iteration
+            // - On the third item (index 2) we process as usual and emit the iteration event
+            return new Promise((resolve, reject) => {
+                let err;
+                const proxyDone = () => {
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 3);
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+                const collection = ['item1', 'item2', 'item3'];
+                const limiter = new the.Limiter(
+                    collection,
+                    async (value, index) => {
+                        if (index === 1) {
+                            throw new Error('test error');
+                        }
+                    },
+                    { bailOnError: false, limit: 1 }
+                );
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    return proxyDone();
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                });
+
+                limiter.start();
+            });
+        });
+    });
+
+    describe('stop', () => {
+        it('should stop iteration after calling stop', async () => {
+            // Four items in collection, parallelism 1, so we expect 4 iterations by default
+            // - On the first item, we emit the iteration event and increment iterations counter
+            // - On the second item (ie index 1) we emit an error. As bailOnError is false, we also emit the iteration event
+            //   and increment the counter. The error event handler invokes `stop()`.
+            // - On the third item we see that stop has been invoked
+            // - The fourth item should never be processed.
+            return new Promise((resolve, reject) => {
+                let err;
+
+                const proxyDone = async () => {
+                    // give any pending promises a chance to resolve
+                    await the.wait(100);
+                    try {
+                        assert(err, 'expected err to exist');
+                        assert.strictEqual(iterations, 2);
+                    } catch (e) {
+                        return reject(e);
+                    }
+
+                    return resolve();
+                };
+
+                const collection = ['item1', 'item2', 'item3', 'item4'];
+                const limiter = new the.Limiter(
+                    collection,
+                    async (value, index) => {
+                        if (index === 1) {
+                            throw new Error('test error');
+                        }
+                    },
+                    { bailOnError: false, limit: 1 }
+                );
+
+                let iterations = 0;
+                limiter.on('iteration', () => {
+                    iterations++;
+                });
+
+                limiter.on('done', () => {
+                    // ERROR PATH, this shouldn't be invoked
+                    return reject('done event should not have been emitted');
+                });
+
+                limiter.on('error', ({ error }) => {
+                    err = error;
+                    limiter.stop();
+
+                    return proxyDone();
+                });
+
+                limiter.start();
+            });
         });
     });
 });
